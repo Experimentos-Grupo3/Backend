@@ -2,30 +2,35 @@ pipeline {
     agent any
 
     tools {
-        // Define tus herramientas aquí si es necesario
+         maven 'MAVEN_3_6_3'
+         jdk 'JDK_17'
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
+         stage ('Compile Stage') {
+           steps {
+               withMaven(maven : 'MAVEN_3_6_3') {
+                   bat 'mvn clean compile'
+               }
             }
-        }
+         }
 
-        stage('Unit Test') {
+        stage('Testing Stage') {
             steps {
-                withMaven(maven: 'MAVEN_3_6_3',)
-                {
+                withMaven(maven: 'MAVEN_3_6_3',){
                     // Ejecuta el test específico
-                    bat 'mvn -Dtest=com.meditech.docseeker.healing.service.NewServiceImplTest#succesfullCreate test'
+                    bat 'mvn test'
                 }
             }
-        }
-    }
+         }
 
-    post {
-        always {
-            cleanWs()
-        }
+         stage('Package Stage') {
+            steps {
+                withMaven(maven: 'Maven_3_9_5') {
+                    // Asegúrate de también excluir el test al empaquetar si es necesario
+                    bat 'mvn package -Dmaven.test.skip=true'
+                }
+            }
+         }
     }
 }
