@@ -28,7 +28,7 @@ pipeline {
             steps {
                 withMaven(maven: 'Maven_3_9_5') {
                     // Asegúrate de también excluir el test al empaquetar si es necesario
-                    bat 'mvn package -Dmaven.test.skip=true'
+                    bat 'mvn package -DskipTests'
                 }
             }
          }
