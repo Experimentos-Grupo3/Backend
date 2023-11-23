@@ -16,9 +16,8 @@ pipeline {
 
         stage('Unit Test') {
             steps {
-
                 dir('D:/UNIVERSIDAD/7MO_SEMESTRE/Disenio_de_experimentos/TRABAJO DOCKSEEKER/Backend') {
-                    bat 'mvn clean test'
+                    bat 'mvn clean test '
                 }
             }
         }
