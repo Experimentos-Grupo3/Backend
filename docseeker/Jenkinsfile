@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     tools {
-         maven 'MAVEN_3_6_3'
+         maven 'MAVEN_3_6_3' // Utiliza la versión 3.6.3 de Maven en todo el pipeline
          jdk 'JDK_17'
     }
 
     stages {
-         stage ('Compile Stage') {
+         stage('Compile Stage') {
            steps {
-               withMaven(maven : 'MAVEN_3_6_3') {
+               withMaven(maven: 'MAVEN_3_6_3') {
                    bat 'mvn clean compile'
                }
             }
@@ -17,7 +17,7 @@ pipeline {
 
         stage('Testing Stage') {
             steps {
-                withMaven(maven: 'MAVEN_3_6_3',){
+                withMaven(maven: 'MAVEN_3_6_3') { // Utiliza la misma versión de Maven en la etapa de pruebas
                     // Ejecuta el test específico
                     bat 'mvn test'
                 }
@@ -26,7 +26,7 @@ pipeline {
 
          stage('Package Stage') {
             steps {
-                withMaven(maven: 'Maven_3_9_5') {
+                withMaven(maven: 'MAVEN_3_6_3') { // Utiliza la misma versión de Maven en la etapa de empaquetado
                     // Asegúrate de también excluir el test al empaquetar si es necesario
                     bat 'mvn package -DskipTests'
                 }
