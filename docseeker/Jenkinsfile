@@ -2,22 +2,22 @@ pipeline {
     agent any
 
     tools {
-        maven 'MAVEN_3_6_3'
-        jdk 'JDK_17'
+        // Define tus herramientas aquí si es necesario
     }
 
     stages {
         stage('Checkout') {
             steps {
-
                 checkout scm
             }
         }
 
         stage('Unit Test') {
             steps {
-                dir('D:/UNIVERSIDAD/7MO_SEMESTRE/Disenio_de_experimentos/TRABAJO DOCKSEEKER/Backend') {
-                    bat 'mvn clean test '
+                withMaven(maven: 'MAVEN_3_6_3',)
+                {
+                    // Ejecuta el test específico
+                    bat 'mvn -Dtest=com.meditech.docseeker.healing.service.NewServiceImplTest#succesfullCreate test'
                 }
             }
         }
